@@ -1,9 +1,17 @@
 import { GameComponent } from "./GameComponent";
+import { Size } from "./Size";
 import Vector2 from "./Vector2";
 
 export class Collider2D extends GameComponent {
-  constructor(public size: Vector2) {
+  private _size: Vector2 | undefined;
+
+  public get size(): Vector2 {
+    return this._size || this.go.getComponent(Size)!.size;
+  }
+
+  constructor(size?: Vector2, public mask: string = "") {
     super();
+    this._size = size;
   }
 
   public render(
@@ -20,6 +28,8 @@ export class Collider2D extends GameComponent {
   }
 
   checkCollision(other: Collider2D): boolean {
+    if (this.mask && other.go.tag !== this.mask) return false;
+    
     const x = this.gameObject.position.x;
     const y = this.gameObject.position.y;
     const otherX = other.gameObject.position.x;

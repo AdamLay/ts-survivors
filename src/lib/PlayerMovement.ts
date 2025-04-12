@@ -21,14 +21,4 @@ export class PlayerMovement extends GameComponent {
       this.go.position.x += this.speed * deltaTime;
     }
   }
-
-  public render(
-    canvas: HTMLCanvasElement,
-    context: CanvasRenderingContext2D
-  ): void {
-    context.fillStyle = "#0077FF";
-    context.beginPath();
-    context.arc(this.go.position.x, this.go.position.y, 20, 0, Math.PI * 2);
-    context.fill();
-  }
 }

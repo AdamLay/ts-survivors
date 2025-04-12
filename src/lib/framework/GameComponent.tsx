@@ -7,6 +7,8 @@ export abstract class GameComponent {
     return this.gameObject;
   } // For convenience
 
+  public start?(): void;
+
   public update?(deltaTime: number): void;
 
   public render?(

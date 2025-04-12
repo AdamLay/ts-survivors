@@ -5,6 +5,8 @@ import Game from "./framework/Game";
 import Vector2 from "./framework/Vector2";
 import { Collider2D } from "./framework/Collider2D";
 import { GameObject } from "./framework/GameObject";
+import { Size } from "./framework/Size";
+import { Health } from "./Health";
 
 export default class EnemyManager extends GameComponent {
   private static instance: EnemyManager | null = null;
@@ -30,6 +32,7 @@ export default class EnemyManager extends GameComponent {
     if (this.spawnTimer >= this.spawnInterval) {
       this.spawnEnemy();
       this.spawnTimer = 0; // Reset the timer
+      this.spawnInterval *= 0.999; // Decrease spawn interval over time
     }
   }
 
@@ -49,7 +52,9 @@ export default class EnemyManager extends GameComponent {
     // Create new enemy GameObject
     const enemy = new GameObject(
       new Vector2(spawnX, spawnY),
-      new Collider2D(new Vector2(30, 30)),
+      new Size(new Vector2(30, 30)),
+      new Collider2D(undefined, "player"),
+      new Health(20),
       new Enemy(0.05) // Adjust speed as needed
     );
 
